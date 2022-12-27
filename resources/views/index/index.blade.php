@@ -3,7 +3,7 @@
 @section('content')
     <main id="main">
         <div class="breadcrumbs d-flex align-items-center"
-             style="background-image: url('assets/img/hero.jpg'); background-position: bottom center">
+             style="background-image: url(assets/img/hero.jpg); background-position: bottom center">
             <div class="container position-relative d-flex flex-column align-items-center text-light" data-aos="fade">
                 <h1 style="font-size: 4rem">Curtain Call</h1>
                 <p style="font-size: 1.5rem; font-weight: 100; letter-spacing: .15rem">
@@ -12,8 +12,7 @@
             </div>
         </div>
 
-        <!-- ======= About Section ======= -->
-        <section id="about" class="about">
+        <section class="about">
             <div class="container" data-aos="fade-up">
 
                 <div class="row position-relative">
@@ -35,7 +34,33 @@
 
             </div>
         </section>
-        <!-- End About Section -->
 
-    </main><!-- End #main -->l
+        <section>
+            <h3 class="text-center mt-3 mb-5 fw-bold" style="font-size: 3rem">Upcoming events</h3>
+
+            <div class="d-flex gap-5 justify-content-center">
+                @foreach($upcomingPerformances as $performance)
+                    <article class="d-flex flex-column align-items-center" style="max-width: 20rem">
+                        <a href="/{{$performance->poster}}" class="d-block glightbox mb-4">
+                            <img src="/{{$performance->poster}}"
+                                 class="img-fluid"
+                                 style="object-fit: contain; max-height: 20rem;"
+                                 alt="{{$performance->performance}} poster">
+                        </a>
+                        <div class="text-center">
+                            <h5>{{$performance->performance}}</h5>
+                            <p>
+                                <i class="fa fa-map-marker"
+                                   aria-hidden="true"></i> {{$performance->theater}}, {{$performance->city}}
+                            </p>
+                            <p>
+                                <i class="fa fa-clock"></i> {{date('d F Y H:i', strtotime($performance->performance_date))}}
+                            </p>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </section>
+
+    </main><!-- End #main -->
 @endsection
