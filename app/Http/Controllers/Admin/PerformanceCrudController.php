@@ -51,6 +51,8 @@ class PerformanceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
+        $this->crud->addButtonFromView('line', 'add_event', 'add_event', 'beginning');
+
         $this->crud->addColumns($this->getConfig(true, false));
     }
 

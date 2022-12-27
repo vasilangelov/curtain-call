@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\EventRequest;
+use App\Models\Performance;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Request;
 
 /**
  * Class EventCrudController
@@ -14,7 +16,9 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class EventCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation {
+        create as baseCreate;
+    }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -29,6 +33,29 @@ class EventCrudController extends CrudController
         CRUD::setModel(\App\Models\Event::class);
         CRUD::setRoute(config('backpack.base.route_prefix') . '/event');
         CRUD::setEntityNameStrings('event', 'events');
+    }
+
+    public function create()
+    {
+        $request = $this->crud->getRequest();
+
+        if (Request::exists('performance_id')) {
+            $performance = Performance::query()->where('id', '=', $request->query('performance_id'))->first();
+
+            if ($performance != null) {
+                $this->crud->modifyField('performance_id', [
+                    'value' => $performance->id,
+                    'attributes' => [
+                        'readonly' => 'readonly',
+                    ],
+                    'options' => function ($query) {
+                        return $query->where('id', '=', $this->crud->getRequest()->query('performance_id'))->get();
+                    }
+                ]);
+            }
+        }
+
+        return $this->baseCreate();
     }
 
     /**
