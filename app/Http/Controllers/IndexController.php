@@ -11,13 +11,12 @@ class IndexController extends Controller
     {
         $latestCount = 3;
 
-        $upcomingPerformances = DB::table('events as e')
-            ->whereDate('performance_date', '>=', date('Y-m-d'))
-            ->join('performances as p', 'p.id', '=', 'e.performance_id')
-            ->join('theaters as t', 't.id', '=', 'e.theater_id')
+        $upcomingPerformances = DB::table('performances as p')
+            ->whereDate('p.performance_date', '>=', time())
+            ->join('theaters as t', 't.id', '=', 'p.theater_id')
             ->join('cities as c', 'c.id', '=', 't.city_id')
-            ->select('e.performance_date', 't.name as theater', 'p.name as performance', 'p.poster', 'c.name as city')
-            ->orderBy('performance_date')
+            ->select('p.name as performance', 'p.performance_date', 'p.poster', 't.name as theater', 'c.name as city')
+            ->orderBy('p.performance_date')
             ->take($latestCount)
             ->get();
 

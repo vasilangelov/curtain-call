@@ -51,8 +51,6 @@ class PerformanceCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        $this->crud->addButtonFromView('line', 'add_event', 'add_event', 'beginning');
-
         $this->crud->addColumns($this->getConfig(true, false));
     }
 
@@ -99,6 +97,25 @@ class PerformanceCrudController extends CrudController
                 'name' => 'description',
                 'label' => 'Description',
                 'type' => $isReadOnly ? 'text' : 'summernote',
+            ],
+            [
+                'name' => 'performance_date',
+                'label' => 'Performance Date',
+                'type' => 'datetime',
+            ],
+            [
+                'name' => 'theater_id',
+                'label' => 'Theater',
+                'type' => 'select',
+                'entity' => 'theater',
+                'attribute' => 'name',
+            ],
+            [
+                'name' => 'tickets',
+                'label' => 'Tickets',
+                'type' => $isReadOnly ? 'select' : 'select_multiple',
+                'attribute' => 'type',
+                'pivot' => 'true',
             ],
         ];
 

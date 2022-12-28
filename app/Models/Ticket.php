@@ -5,7 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class Ticket extends Model
 {
     use CrudTrait;
 
@@ -15,7 +15,7 @@ class Event extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'events';
+    protected $table = 'tickets';
     // protected $primaryKey = 'id';
     // public $timestamps = false;
     protected $guarded = ['id'];
@@ -34,15 +34,7 @@ class Event extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function theater()
-    {
-        return $this->belongsTo(Theater::class, 'theater_id', 'id');
-    }
 
-    public function performance()
-    {
-        return $this->belongsTo(Performance::class, 'performance_id', 'id');
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

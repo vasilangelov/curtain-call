@@ -4,4 +4,5 @@
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('city') }}"><i class="nav-icon la la-th-list"></i> Cities</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('theater') }}"><i class="nav-icon la la-th-list"></i> Theaters</a></li>
 <li class="nav-item"><a class="nav-link" href="{{ backpack_url('performance') }}"><i class="nav-icon la la-th-list"></i> Performances</a></li>
-<li class="nav-item"><a class="nav-link" href="{{ backpack_url('event') }}"><i class="nav-icon la la-th-list"></i> Events</a></li>
+
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('ticket') }}"><i class="nav-icon la la-th-list"></i> Tickets</a></li>
