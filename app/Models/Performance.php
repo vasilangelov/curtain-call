@@ -59,12 +59,16 @@ class Performance extends Model
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
         $this->attributes[$attribute_name] = 'storage/' . $this->attributes[$attribute_name];
     }
+
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function theater()
+    {
+        return $this->belongsTo(Theater::class, 'theater_id', 'id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

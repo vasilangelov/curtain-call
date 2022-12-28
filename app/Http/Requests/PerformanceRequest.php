@@ -29,7 +29,9 @@ class PerformanceRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:255',
             'description' => 'required|max:1000',
-            'poster' => "nullable|image|max:$this->maxImageSizeInKilobytes"
+            'performance_date' => 'required|after:now',
+            'poster' => "nullable|image|max:$this->maxImageSizeInKilobytes",
+            'theater_id' => 'required|exists:theaters,id',
         ];
     }
 
@@ -55,6 +57,7 @@ class PerformanceRequest extends FormRequest
         $imageSizeInMegabytes = $this->maxImageSizeInKilobytes / 1024;
 
         return [
+            'performance_date.after' => "You can't make an event in the past",
             'poster.max' => "The :attribute must not be greater than $imageSizeInMegabytes MB.",
         ];
     }

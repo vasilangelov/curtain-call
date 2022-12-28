@@ -98,6 +98,18 @@ class PerformanceCrudController extends CrudController
                 'label' => 'Description',
                 'type' => $isReadOnly ? 'text' : 'summernote',
             ],
+            [
+                'name' => 'performance_date',
+                'label' => 'Performance Date',
+                'type' => 'datetime',
+            ],
+            [
+                'name' => 'theater_id',
+                'label' => 'Theater',
+                'type' => 'select',
+                'entity' => 'theater',
+                'attribute' => 'name',
+            ],
         ];
 
         if ($displayPoster) {
