@@ -41,8 +41,9 @@
             <div class="d-flex gap-5 justify-content-center">
                 @foreach($upcomingPerformances as $performance)
                     <article class="d-flex flex-column align-items-center" style="max-width: 20rem">
-                        <a href="/{{$performance->poster}}" class="d-block glightbox mb-4">
-                            <img src="/{{$performance->poster}}"
+                        <a href="/{{ $performance->poster ?? 'assets/img/no_poster.png' }}"
+                           class="d-block glightbox mb-4">
+                            <img src="/{{ $performance->poster ?? 'assets/img/no_poster.png' }}"
                                  class="img-fluid"
                                  style="object-fit: contain; max-height: 20rem;"
                                  alt="{{$performance->performance}} poster">
