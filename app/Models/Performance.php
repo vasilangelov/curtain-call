@@ -50,6 +50,8 @@ class Performance extends Model
             Storage::delete(Str::replaceFirst('storage/', 'public/', $this->{$attribute_name}));
 
             $this->attributes[$attribute_name] = null;
+
+            return;
         }
 
         $disk = "public";
