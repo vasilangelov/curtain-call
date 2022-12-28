@@ -34,6 +34,16 @@ class Performance extends Model
     {
         parent::boot();
 
+        static::updating(function ($obj) {
+            if (isset($obj->poster)) {
+                $savedElement = static::query()->where('id', '=', $obj->id)->first();
+
+                if (isset($savedElement->poster)) {
+                    Storage::delete(Str::replaceFirst('storage/', 'public/', $savedElement->poster));
+                }
+            }
+        });
+
         static::deleting(function ($obj) {
             if (isset($obj->poster)) {
                 Storage::delete(Str::replaceFirst('storage/', 'public/', $obj->poster));
@@ -50,6 +60,8 @@ class Performance extends Model
             Storage::delete(Str::replaceFirst('storage/', 'public/', $this->{$attribute_name}));
 
             $this->attributes[$attribute_name] = null;
+
+            return;
         }
 
         $disk = "public";
