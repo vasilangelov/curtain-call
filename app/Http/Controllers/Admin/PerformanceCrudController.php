@@ -110,6 +110,13 @@ class PerformanceCrudController extends CrudController
                 'entity' => 'theater',
                 'attribute' => 'name',
             ],
+            [
+                'name' => 'tickets',
+                'label' => 'Tickets',
+                'type' => $isReadOnly ? 'select' : 'select_multiple',
+                'attribute' => 'type',
+                'pivot' => 'true',
+            ],
         ];
 
         if ($displayPoster) {

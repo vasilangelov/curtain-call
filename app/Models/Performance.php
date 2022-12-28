@@ -69,6 +69,11 @@ class Performance extends Model
     {
         return $this->belongsTo(Theater::class, 'theater_id', 'id');
     }
+
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class, 'performance_tickets', 'performance_id', 'ticket_id');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

@@ -32,6 +32,7 @@ class PerformanceRequest extends FormRequest
             'performance_date' => 'required|after:now',
             'poster' => "nullable|image|max:$this->maxImageSizeInKilobytes",
             'theater_id' => 'required|exists:theaters,id',
+            'tickets.*' => 'exists:tickets,id',
         ];
     }
 
