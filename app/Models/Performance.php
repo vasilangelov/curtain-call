@@ -6,10 +6,12 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Scout\Searchable;
 
 class Performance extends Model
 {
     use CrudTrait;
+    use Searchable;
 
     /*
     |--------------------------------------------------------------------------
@@ -58,6 +60,20 @@ class Performance extends Model
 
         $this->uploadFileToDisk($value, $attribute_name, $disk, $destination_path);
         $this->attributes[$attribute_name] = 'storage/' . $this->attributes[$attribute_name];
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        // NOTE: only keys are required in order to search with the "database" driver!
+        return [
+            'name' => $this->name,
+            'theaters.name' => '',
+        ];
     }
 
     /*
