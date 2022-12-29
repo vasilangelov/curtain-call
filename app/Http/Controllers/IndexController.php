@@ -2,22 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Performance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class IndexController extends Controller
 {
+    private const LATEST_COUNT = 3;
+
     public function index()
     {
-        $latestCount = 3;
-
-        $upcomingPerformances = DB::table('performances as p')
-            ->whereDate('p.performance_date', '>=', time())
-            ->join('theaters as t', 't.id', '=', 'p.theater_id')
+        $upcomingPerformances = Performance::query()
+            ->whereDate('performances.performance_date', '>=', time())
+            ->join('theaters as t', 't.id', '=', 'performances.theater_id')
             ->join('cities as c', 'c.id', '=', 't.city_id')
-            ->select('p.name as performance', 'p.performance_date', 'p.poster', 't.name as theater', 'c.name as city')
-            ->orderBy('p.performance_date')
-            ->take($latestCount)
+            ->select('performances.name as performance',
+                'performances.performance_date',
+                'performances.poster',
+                't.name as theater',
+                'c.name as city')
+            ->orderBy('performances.performance_date')
+            ->take(static::LATEST_COUNT)
             ->get();
 
         return view('index.index', [

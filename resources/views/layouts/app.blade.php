@@ -31,6 +31,10 @@
     <!-- Template Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet">
 
+    <!-- Custom CSS File -->
+    <link href="assets/css/override.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
     <!-- =======================================================
     * Template Name: UpConstruction - v1.3.0
     * Template URL: https://bootstrapmade.com/upconstruction-bootstrap-construction-website-template/
@@ -39,7 +43,7 @@
     ======================================================== -->
 </head>
 
-<body>
+<body class="d-flex flex-column" style="min-height: 100vh">
 
 <!-- ======= Header ======= -->
 <header id="header" class="header d-flex align-items-center">
@@ -56,8 +60,17 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li>
-                    <a href="{{ route('index.index', null, false) }}" {{ request()->is('/') ? 'class=active' : '' }}>
+                    <a
+                        href="{{ route('index.index', null, false) }}"
+                        {{ Route::currentRouteName() === 'index.index' ? 'class=active' : '' }}>
                         Home
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('performance.list', null, false) }}"
+                        {{ Route::currentRouteName() === 'performance.list' ? 'class=active' : '' }}>
+                        Performances
                     </a>
                 </li>
             </ul>
@@ -66,7 +79,9 @@
     </div>
 </header><!-- End Header -->
 
-@yield('content')
+<div style="flex-grow: 1">
+    @yield('content')
+</div>
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer"

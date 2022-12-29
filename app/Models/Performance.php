@@ -27,6 +27,15 @@ class Performance extends Model
     // protected $hidden = [];
     // protected $dates = [];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'performance_date' => 'datetime',
+    ];
+
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
