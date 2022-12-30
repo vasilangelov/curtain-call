@@ -1,0 +1,25 @@
+.page-link {
+    color: var(--color-default);
+}
+
+.page-link:hover {
+    color: var(--color-default);
+}
+
+.page-item.active > .page-link {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.page-item.active > .page-link {
+    color: #fff;
+}
+
+.page-link:focus {
+    color: var(--color-default);
+    box-shadow: 0 0 0 0.25rem rgba(255, 31, 44, 0.5);
+}
+
+.scroll-top:hover {
+    background-color: #ff4f5a;
+}
