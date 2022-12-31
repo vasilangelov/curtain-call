@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="breadcrumbs d-flex align-items-center"
-         style="background-image: url('assets/img/hero.jpg'); background-position: bottom center">
+         style="background-image: url('/assets/img/hero.jpg'); background-position: bottom center">
         <div class="container position-relative d-flex flex-column align-items-center" data-aos="fade">
             <h2>{{ $title }}</h2>
         </div>
@@ -32,9 +32,10 @@
                 </div>
             @endif
 
-            <div class="d-flex flex-column align-items-center gap-4" style="width: min(40rem, 90%); margin-inline: auto">
+            <div class="d-flex flex-column align-items-center gap-4"
+                 style="width: min(40rem, 90%); margin-inline: auto">
                 @foreach($performances as $performance)
-                    <article class="d-flex gap-4" style="min-height: 10rem">
+                    <article class="d-flex justify-content-between gap-4 w-100" style="min-height: 10rem">
                         <a href="/{{ $performance->poster ?? 'assets/img/no_poster.png' }}"
                            class="d-block glightbox mb-4">
                             <img src="/{{ $performance->poster ?? 'assets/img/no_poster.png' }}"
@@ -43,7 +44,7 @@
                                  alt="{{ $performance->name }} poster">
                         </a>
 
-                        <div class="d-flex flex-column">
+                        <div class="d-flex flex-column" style="width: 60%;">
                             <h3 class="mb-5">{{ $performance->name }}</h3>
                             <p>
                                 <i class="fa fa-map-marker"
@@ -52,7 +53,12 @@
                             <p>
                                 <i class="fa fa-clock"></i> {{ $performance->performance_date->format('d F Y H:i') }}
                             </p>
+                            <a class="c-link"
+                               href="{{ route('performance.details', ['id' => $performance->id], false) }}">
+                                See More &rarr;
+                            </a>
                         </div>
+
                     </article>
                 @endforeach
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Performance;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class PerformanceController extends Controller
@@ -45,6 +46,40 @@ class PerformanceController extends Controller
             'queryString' => $queryString,
             'startDate' => $startDate,
             'endDate' => $endDate,
+        ]);
+    }
+
+    public function details(int $id)
+    {
+        $performance = Performance::with([
+            'tickets' => function ($query) {
+                $query
+                    ->select('type', 'price')
+                    ->orderBy('price');
+            }
+        ])
+            ->where('performances.id', '=', $id)
+            ->join('theaters', 'theaters.id', '=', 'performances.theater_id')
+            ->join('cities', 'cities.id', '=', 'theaters.city_id')
+            ->select(
+                'performances.id',
+                'performances.name',
+                'performances.description',
+                'performances.performance_date',
+                'performances.poster',
+                'cities.name as city',
+                'theaters.name as theater',
+            )
+            ->first();
+
+        // If the performance is not present in the database return 404
+        if (is_null($performance)) {
+            return abort(404);
+        }
+
+        return view('performance.details', [
+            'title' => 'Performance Details',
+            'performance' => $performance,
         ]);
     }
 }

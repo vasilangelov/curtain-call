@@ -16,4 +16,6 @@ use \App\Http\Controllers\PerformanceController;
 */
 
 Route::get('/', [IndexController::class, 'index'])->name('index.index');
+
 Route::get('/performances', [PerformanceController::class, 'list'])->name('performance.list');
+Route::get('/performances/{id}', [PerformanceController::class, 'details'])->whereNumber('id')->name('performance.details');
