@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class PerformanceController extends Controller
 {
     private const ITEMS_PER_PAGE = 10;
+    private const PAGINATION_ON_EACH_SIDE = 2;
 
     public function list(Request $request)
     {
@@ -38,7 +39,9 @@ class PerformanceController extends Controller
                     $builder->whereDate('performance_date', '<=', $endDate->format('Y-m-d'));
                 }
             })
-            ->paginate(static::ITEMS_PER_PAGE);
+            ->paginate(static::ITEMS_PER_PAGE)
+            ->onEachSide(static::PAGINATION_ON_EACH_SIDE)
+            ->withQueryString();
 
         return view('performance.list', [
             'title' => 'Performances',

@@ -63,8 +63,8 @@
                 @endforeach
             </div>
 
-            <div style="max-width: 40rem; margin-inline: auto">
-                {{ $performances->withQueryString()->links() }}
+            <div class="c-navigation" style="max-width: 40rem; margin-inline: auto">
+                {{ $performances->links()}}
             </div>
         </section>
     @else

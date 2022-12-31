@@ -72,3 +72,13 @@
     background-color: var(--c-color-bg-glass-100);
     backdrop-filter: blur(.1rem);
 }
+
+.c-navigation > nav > .d-sm-none > ul.pagination {
+    margin: 0 auto;
+}
+
+.c-navigation > nav > div.d-sm-flex {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
