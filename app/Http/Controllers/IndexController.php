@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Performance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +14,7 @@ class IndexController extends Controller
     public function index()
     {
         $upcomingPerformances = Performance::query()
-            ->whereDate('performances.performance_date', '>=', time())
+            ->where('performances.performance_date', '>=', Carbon::now())
             ->join('theaters as t', 't.id', '=', 'performances.theater_id')
             ->join('cities as c', 'c.id', '=', 't.city_id')
             ->select(
