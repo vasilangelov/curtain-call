@@ -73,4 +73,5 @@ In order for the project to be fully operational you have to run these commands 
     composer install
     php artisan key:generate
     php artisan backpack:publish-assets
+    php artisan storage:link
     php artisan migrate --seed
