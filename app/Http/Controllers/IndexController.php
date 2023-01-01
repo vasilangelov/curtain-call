@@ -16,7 +16,9 @@ class IndexController extends Controller
             ->whereDate('performances.performance_date', '>=', time())
             ->join('theaters as t', 't.id', '=', 'performances.theater_id')
             ->join('cities as c', 'c.id', '=', 't.city_id')
-            ->select('performances.name as performance',
+            ->select(
+                'performances.id',
+                'performances.name as performance',
                 'performances.performance_date',
                 'performances.poster',
                 't.name as theater',
