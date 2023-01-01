@@ -1,66 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Curtain Call
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel project to manage theatre plays.
 
-## About Laravel
+## Table of contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [About](#about)
+  - [Admin panel](#admin-panel)
+  - [Client side](#client-side)
+- [Project requirements](#project-requirements)
+- [Project setup](#project-setup)
+  - [Configure the `.env` file](#configure-the-env-file)
+  - [Download assets and migrate and seed the database](#download-assets-and-migrate-and-seed-the-database)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## About
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Curtain Call is a project about managing theater plays.
 
-## Learning Laravel
+### Admin panel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Admins can login at the specific route `/admin/login`. They can manage all the entities (theater performances, theaters, cities, ticket types). There currently 2 roles that can be managed:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- `admin` - can perform CRUD operations on the entities
+- `superadmin` - same as the above + admin creation and role management
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+> **NOTE:** The first user is seeded as `superadmin` and you can configure it in the `.env` file. [Configure the `.env` file](#configure-the-env-file)
 
-## Laravel Sponsors
+### Client side
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The client side consists of a homepage, performance list and performance details. The homepage displays the latest upcoming performances. It also has a performance search bar by performance name, theater and filter by dates. The performance list is a paginated list of all (or filtered) performances. The performance details shows a detailed view of an performance entity alongside with ticket details.
 
-### Premium Partners
+## Project requirements
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+This project was initialized using the following dependencies:
 
-## Contributing
+- php 8
+- composer
+- Laravel 9
+- Backpack for Laravel
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Project setup
 
-## Code of Conduct
+### Configure the `.env` file
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+You can get the app to be fully operational by copying the contents of the `.env.example` into `.env` file and then doing the following operations:
 
-## Security Vulnerabilities
+Variables to be modified:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    APP_URL=
 
-## License
+    DB_DATABASE_NAME=
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+> **NOTE:** `APP_URL` depends on the way you host the app and/if you have virtualhost configurations. Usually `http://localhost`
+
+> **NOTE:** It might be a good idea to add different database name instead of `laravel`
+
+Variables to be set:
+
+    SCOUT_DRIVER=database
+    
+    SUPERADMIN_NAME=
+    SUPERADMIN_EMAIL=
+    SUPERADMIN_PASSWORD=
+    
+    BACKPACK_REGISTRATION_OPEN=false
+
+> **NOTE:** The fields `SUPERADMIN_NAME`, `SUPERADMIN_EMAIL` and `SUPERADMIN_PASSWORD` can be entirely customized. If you run the seed without them it will default to `SUPERADMIN_NAME=test`, `SUPERADMIN_EMAIL=test@test.com` and `SUPERADMIN_PASSWORD=123123`. **PLEASE BE WARNED THAT THIS IS NOT RECCOMENDED IN A PRODUCTION ENVIRONMENT!**
+
+
+### Download assets and migrate and seed the database
+In order for the project to be fully operational you have to run these commands inside the project folder
+
+    composer install
+    php artisan key:generate
+    php artisan backpack:publish-assets
+    php artisan migrate --seed
