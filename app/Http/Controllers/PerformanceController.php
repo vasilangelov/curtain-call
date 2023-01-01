@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Performance;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
@@ -33,6 +34,8 @@ class PerformanceController extends Controller
 
                 if ($startDate) {
                     $builder->whereDate('performance_date', '>=', $startDate->format('Y-m-d'));
+                } else {
+                    $builder->where('performance_date', '>=', Carbon::now());
                 }
 
                 if ($endDate) {
