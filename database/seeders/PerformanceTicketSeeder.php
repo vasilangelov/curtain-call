@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class PerformanceTicketSeeder extends Seeder
 {
-    private const TICKET_IDS = [1, 2, 3, 4];
+    private const TICKET_IDS = [2, 3, 4];
 
     /**
      * Run the database seeds.
@@ -20,11 +20,22 @@ class PerformanceTicketSeeder extends Seeder
         $performanceTicketModels = [];
 
         for ($performanceId = 1; $performanceId <= 120; $performanceId++) {
-            $ticketIds = array_rand(static::TICKET_IDS, rand(1, 4));
+            $additionalTicketsCount = rand(0, 3);
+
+            $ticketIds = [];
+
+            if ($additionalTicketsCount > 0) {
+                $ticketIds = array_rand(static::TICKET_IDS, $additionalTicketsCount);
+            }
 
             // In the case of single item returned.
             if (is_int($ticketIds)) {
                 $ticketIds = [$ticketIds];
+            }
+
+            // Add the 'Normal' ticket if it is not present in the array.
+            if (!in_array(1, $ticketIds)) {
+                $ticketIds[] = 1;
             }
 
             foreach ($ticketIds as $ticketId) {
