@@ -58,7 +58,7 @@
         <section>
             <h3 class="text-center mt-3 mb-5 fw-bold" style="font-size: 3rem">Upcoming events</h3>
 
-            <div class="d-flex gap-5 justify-content-center flex-wrap">
+            <div class="d-flex gap-5 justify-content-center align-items-stretch flex-wrap">
                 @foreach($upcomingPerformances as $performance)
                     <article class="d-flex flex-column align-items-center" style="max-width: 20rem">
                         <a href="/{{ $performance->poster ?? 'assets/img/no_poster.png' }}"
@@ -68,7 +68,7 @@
                                  style="object-fit: contain; max-height: 20rem;"
                                  alt="{{ $performance->performance }} poster">
                         </a>
-                        <div class="text-center">
+                        <div class="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-between">
                             <h5>{{ $performance->performance }}</h5>
                             <p>
                                 <i class="fa fa-map-marker"
@@ -77,6 +77,10 @@
                             <p>
                                 <i class="fa fa-clock"></i> {{ $performance->performance_date->format('d F Y H:i') }}
                             </p>
+                            <a class="c-link"
+                               href="{{ route('performance.details', ['id' => $performance->id], false) }}">
+                                See More &rarr;
+                            </a>
                         </div>
                     </article>
                 @endforeach
