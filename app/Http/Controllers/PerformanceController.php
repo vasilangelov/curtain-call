@@ -52,7 +52,7 @@ class PerformanceController extends Controller
         return view('performance.list', [
             'title' => 'Performances',
             'performances' => $performances,
-            'queryString' => $data->query ?? null,
+            'queryString' => $data['query'] ?? null,
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
