@@ -84,3 +84,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.c-bg-glass {
+    padding: 1rem;
+    border-radius: var(--c-border-radius);
+
+    width: 100%;
+
+    background-color: var(--c-color-bg-glass-100);
+    backdrop-filter: blur(.1rem);
+}

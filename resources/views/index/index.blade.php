@@ -25,6 +25,16 @@
                         </div>
                     </div>
 
+                    @if ($errors->any())
+                        <div class="c-bg-glass">
+                            <ul class="mx-3 my-2 p-0">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <button type="submit" class="c-button text-center">
                         Search
                     </button>
@@ -68,7 +78,8 @@
                                  style="object-fit: contain; max-height: 20rem;"
                                  alt="{{ $performance->performance }} poster">
                         </a>
-                        <div class="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-between">
+                        <div
+                            class="text-center flex-grow-1 d-flex flex-column align-items-center justify-content-between">
                             <h5>{{ $performance->performance }}</h5>
                             <p>
                                 <i class="fa fa-map-marker"

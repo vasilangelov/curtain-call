@@ -12,13 +12,20 @@ class PerformanceController extends Controller
     private const ITEMS_PER_PAGE = 10;
     private const PAGINATION_ON_EACH_SIDE = 2;
 
+    private const PERFORMANCE_LIST_VALIDATIONS = [
+        'query' => 'nullable|max:100',
+        'startDate' => 'nullable|date_format:Y-m-d|before_or_equal:endDate',
+        'endDate' => 'nullable|date_format:Y-m-d|after_or_equal:startDate',
+    ];
+
     public function list(Request $request)
     {
-        $queryString = $request->query->get('query');
-        $startDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('startDate'));
-        $endDate = \DateTime::createFromFormat('Y-m-d', $request->query->get('endDate'));
+        $data = $request->validate(self::PERFORMANCE_LIST_VALIDATIONS);
 
-        $performances = Performance::search($queryString)
+        $startDate = isset($data['startDate']) ? Carbon::parse($data['startDate']) : null;
+        $endDate = isset($data['endDate']) ? Carbon::parse($data['endDate']) : null;
+
+        $performances = Performance::search($data['query'] ?? '')
             ->query(function ($builder) use ($startDate, $endDate) {
                 $builder
                     ->select(
@@ -32,14 +39,10 @@ class PerformanceController extends Controller
                     ->join('cities', 'cities.id', '=', 'theaters.city_id')
                     ->orderBy('performance_date');
 
-                if ($startDate) {
-                    $builder->whereDate('performance_date', '>=', $startDate->format('Y-m-d'));
-                } else {
-                    $builder->where('performance_date', '>=', Carbon::now());
-                }
+                $builder->whereDate('performance_date', '>=', $startDate ?? Carbon::now());
 
                 if ($endDate) {
-                    $builder->whereDate('performance_date', '<=', $endDate->format('Y-m-d'));
+                    $builder->whereDate('performance_date', '<=', $endDate);
                 }
             })
             ->paginate(static::ITEMS_PER_PAGE)
@@ -49,7 +52,7 @@ class PerformanceController extends Controller
         return view('performance.list', [
             'title' => 'Performances',
             'performances' => $performances,
-            'queryString' => $queryString,
+            'queryString' => $data->query ?? null,
             'startDate' => $startDate,
             'endDate' => $endDate,
         ]);
